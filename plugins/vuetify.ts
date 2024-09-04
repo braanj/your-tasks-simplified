@@ -7,6 +7,9 @@ import { md2 } from "vuetify/blueprints";
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     blueprint: md2,
+    theme: {
+      defaultTheme: "light",
+    },
   });
 
   app.vueApp.use(vuetify);
