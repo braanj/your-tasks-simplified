@@ -51,6 +51,9 @@ const onSubmit = async () => {
       fileData.value = data;
     },
   });
+
+  const { data } = await useFetch("/api/convert-csv-to-html");
+  console.log(data.value);
 };
 
 const generatedTable = ref("");
@@ -102,8 +105,6 @@ const generateTable = (data: any[] | null) => {
           </tbody>
         </table>
       `;
-
-    console.log(generatedTable.value);
   } else {
     console.log("File provided is empty!");
   }
@@ -134,7 +135,8 @@ const copyToClipboard = () => {
 </script>
 
 <template>
-  <v-row justify="start" no-gutters>
+  <!-- TODO: Move the converter to a dedicated page (this page will be the landing page for the tools) -->
+  <v-row justify="start" no-gutters fullscreen>
     <v-col cols="4" class="p-4">
       <v-form @submit.prevent="onSubmit">
         <v-file-input
@@ -162,31 +164,16 @@ const copyToClipboard = () => {
 
       <v-divider />
 
-      <div v-if="generatedTable" class="buttons">
-        <!-- <v-checkbox
-          v-model="addClass"
-          label="Add table class"
-          density="compact"
-          hide-details
-        />
-
-        <v-divider />
-
-        <v-item-group>
-          <v-item>
-            <v-btn variant="outlined" @click="reset">Reset style</v-btn></v-item
-          >
-        </v-item-group> -->
-
-        <v-btn
-          variant="tonal"
-          prepend-icon="mdi-content-copy"
-          block
-          @click="copyToClipboard"
-        >
-          Copy to clipboard
-        </v-btn>
-      </div>
+      <v-btn
+        variant="outlined"
+        prepend-icon="mdi-content-copy"
+        block
+        @click="copyToClipboard"
+        :loading="isGenerating"
+        :disabled="!generatedTable"
+      >
+        Copy to clipboard
+      </v-btn>
     </v-col>
 
     <v-divider vertical />
