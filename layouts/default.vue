@@ -1,34 +1,58 @@
+<script setup>
+import { useTheme } from "vuetify";
+const themes = {
+  light: { icon: "mdi-white-balance-sunny", color: "#F57F17", label: "Light" },
+  dark: { icon: "mdi-weather-night", color: "#01579B", label: "Dark" },
+};
+
+const value = ref(false);
+const theme = useTheme();
+
+watch(value, (newValue, oldValue) => {
+  theme.global.name.value = newValue ? "dark" : "light";
+});
+</script>
+
 <template>
-  <nav
-    class="container is-fluid navbar is-fixed-top border-b-thin"
-    role="navigation"
-    aria-label="main navigation"
-  >
-    <div class="navbar-brand">
-      <div class="navbar-item px-0">
-        <v-icon icon="mdi-emoticon-cool" />
-        <strong> Your tasks simplified</strong>
-      </div>
-    </div>
+  <v-app>
+    <v-app-bar :elevation="0" class="border-b-thin" density="compact">
+      <template v-slot:prepend>
+        <v-app-bar-nav-icon icon="mdi-emoticon-cool"></v-app-bar-nav-icon>
+      </template>
 
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-end">
-        <nuxt-link class="navbar-item" to="/">
-          <v-icon icon="mdi-home" />
-          <span>Table generator</span></nuxt-link
+      <v-app-bar-title size="large" class="ms-0">
+        Your tasks simplified
+      </v-app-bar-title>
+
+      <v-spacer />
+
+      <v-row tag="nav" align="center" justify="end" no-gutters="">
+        <v-btn to="/" variant="text" prepend-icon="mdi-home">
+          Table generator
+        </v-btn>
+
+        <v-btn to="/demo" variant="flat" prepend-icon="mdi-test-tube"
+          >Demo</v-btn
         >
 
-        <nuxt-link class="navbar-item" to="/demo"
-          ><v-icon icon="mdi-test-tube" /><span>Demo</span></nuxt-link
-        >
-      </div>
-    </div>
-  </nav>
+        <v-switch
+          v-model="value"
+          hide-details
+          class="px-4"
+          :false-icon="themes.light.icon"
+          :base-color="themes.light.color"
+          :true-icon="themes.dark.icon"
+          :color="themes.dark.color"
+        ></v-switch>
+      </v-row>
+    </v-app-bar>
 
-  <v-divider thickness="5" />
-  <v-container fluid>
-    <slot />
-  </v-container>
+    <v-divider thickness="15" />
+
+    <v-container fluid>
+      <slot />
+    </v-container>
+  </v-app>
 </template>
 
 <style>
