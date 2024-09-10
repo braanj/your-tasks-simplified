@@ -1,5 +1,8 @@
 <script setup>
 import { useTheme } from "vuetify";
+
+const navigation = useNavigation();
+
 const themes = {
   light: { icon: "mdi-white-balance-sunny", color: "#F57F17", label: "Light" },
   dark: { icon: "mdi-weather-night", color: "#01579B", label: "Dark" },
@@ -21,19 +24,21 @@ watch(value, (newValue, oldValue) => {
       </template>
 
       <v-app-bar-title size="large" class="ms-0">
-        Your tasks simplified
+        <v-btn variant="plain" to="/">Your tasks simplified</v-btn>
       </v-app-bar-title>
 
       <v-spacer />
 
       <v-row tag="nav" align="center" justify="end" no-gutters="">
-        <v-btn to="/" variant="text" prepend-icon="mdi-home">
-          Table generator
-        </v-btn>
-
-        <v-btn to="/demo" variant="flat" prepend-icon="mdi-test-tube"
-          >Demo</v-btn
+        <v-btn
+          v-for="(item, index) in navigation"
+          :key="index"
+          :to="item.route"
+          variant="plain"
+          :prepend-icon="item.icon"
         >
+          {{ item.label }}
+        </v-btn>
 
         <v-switch
           v-model="value"
