@@ -7,14 +7,17 @@ type NavigationItem = {
 export const NAVIGATION: NavigationItem[] = [
   { route: "/", label: "Home", icon: "mdi-home" },
   { route: "/tools", label: "All tools", icon: "mdi-shuffle" },
-  { route: "/demo", label: "Demo page", icon: "mdi-test-tube" },
 ];
 
 export const TOOLS: NavigationItem[] = [
   {
     route: "/tools/csv-to-html",
-    label: "Csv to html table",
+    label: "Convert csv to html table",
     icon: "mdi-file-excel",
   },
-  { route: "/tools/images", label: "Optimize Images", icon: "mdi-test-tube" },
+  {
+    route: "/tools/images",
+    label: "Convert images to webp",
+    icon: "mdi-test-tube",
+  },
 ];
