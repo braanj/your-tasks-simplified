@@ -1,7 +1,6 @@
 <script setup>
 import { useTheme } from "vuetify";
-
-const navigation = useNavigation();
+import { NAVIGATION } from "~/constants";
 
 const themes = {
   light: { icon: "mdi-white-balance-sunny", color: "#F57F17", label: "Light" },
@@ -11,7 +10,7 @@ const themes = {
 const value = ref(false);
 const theme = useTheme();
 
-watch(value, (newValue, oldValue) => {
+watch(value, (newValue, _) => {
   theme.global.name.value = newValue ? "dark" : "light";
 });
 </script>
@@ -20,7 +19,12 @@ watch(value, (newValue, oldValue) => {
   <v-app>
     <v-app-bar :elevation="0" class="border-b-thin" density="compact">
       <template v-slot:prepend>
-        <v-app-bar-nav-icon icon="mdi-emoticon-cool"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon
+          to="/"
+          link
+          variant="plain"
+          icon="mdi-emoticon-cool"
+        ></v-app-bar-nav-icon>
       </template>
 
       <v-app-bar-title size="large" class="ms-0">
@@ -31,7 +35,7 @@ watch(value, (newValue, oldValue) => {
 
       <v-row tag="nav" align="center" justify="end" no-gutters="">
         <v-btn
-          v-for="(item, index) in navigation"
+          v-for="(item, index) in NAVIGATION"
           :key="index"
           :to="item.route"
           variant="plain"
@@ -51,8 +55,6 @@ watch(value, (newValue, oldValue) => {
         ></v-switch>
       </v-row>
     </v-app-bar>
-
-    <v-divider thickness="15" />
 
     <v-container fluid>
       <slot />
